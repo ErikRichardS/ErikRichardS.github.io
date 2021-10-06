@@ -37,7 +37,7 @@ function draw() {
 			if (map_field[x][y]) {
 				ctx.beginPath();
 				ctx.rect(x*10 + 1, y*10 + 1, 8, 8);
-				ctx.fillStyle = "#0095DD";
+				ctx.fillStyle = "#111";
 				ctx.fill();
 				ctx.closePath();
 			}

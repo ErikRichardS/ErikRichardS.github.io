@@ -1,13 +1,10 @@
 body{
-	background-color: lightblue;
+	background-color: white;
 }
 
 
-
-
-
 canvas {
-	background: #eee;
+	background: #ddd;
 	border-color: coral;
 }
 
