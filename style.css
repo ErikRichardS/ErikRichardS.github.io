@@ -1,0 +1,20 @@
+body{
+	background-color: lightblue;
+}
+
+
+
+
+
+canvas {
+	background: #eee;
+	border-color: coral;
+}
+
+
+.center{
+	width: 50%;
+	margin: auto;
+	margin-top: 10%;
+	text-align: center;
+}
