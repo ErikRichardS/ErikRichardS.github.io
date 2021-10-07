@@ -8,24 +8,7 @@ var interval;
 var locked = false;
 
 function initiate_game(){
-	map_field = [];
-	var string_map = ""
-	
-	for (let x = 0; x < map_size; ++x) { 
-		map_field.push([])
-
-		for (let y = 0; y < map_size; ++y) {
-			if (0.5 < Math.random()) {
-				map_field[x].push( true );
-				string_map += "1";
-			}
-			else{
-				map_field[x].push( false );
-				string_map += "0";
-			}
-		}
-		string_map += "\n";
-	}
+	set_game_field();
 
 	var canvas = document.getElementById("gameOfLife");
 
@@ -49,14 +32,27 @@ function initiate_game(){
 			start_interval(time_seconds);
 		}
 	}
-
-
 }
 
-function getCanvasPosition(canvas, event) {
-	while(locked);
-	locked = true;
+function set_game_field() {
+	map_field = [];
+	
+	for (let x = 0; x < map_size; ++x) { 
+		map_field.push([])
 
+		for (let y = 0; y < map_size; ++y) {
+			if (0.5 < Math.random()) {
+				map_field[x].push( true );
+			}
+			else{
+				map_field[x].push( false );
+			}
+		}
+	}
+}
+
+
+function getCanvasPosition(canvas, event) {
 	var rect = canvas.getBoundingClientRect();
 	var top = rect.top;
 	var left = rect.left;
@@ -71,9 +67,7 @@ function getCanvasPosition(canvas, event) {
 	//document.getElementById("info-corn").innerHTML = "top: "+top+" bot: "+left
 
 	//document.getElementById("info-misc").innerHTML = "width: "+canvas.width;
-	locked = false;
 }
-
 
 
 function draw() {
@@ -98,9 +92,6 @@ function draw() {
 }
 
 function update() {
-	while(locked);
-	locked = true;
-
 	var changes = [];
 
 	for (let x = 0; x < map_size; ++x) { 
@@ -136,7 +127,6 @@ function update() {
 	}
 
 	draw();
-	locked = false;
 }
 
 
@@ -167,9 +157,14 @@ function pause_start(button) {
 
 function get_interval_time(){
 	var slider_value = document.getElementById("interval").value;
-	return Math.round( (1000 / slider_value) ) / 100;
+	return Math.round( ( 100 - slider_value) ) / 100;
 }
 
 function start_interval(time_seconds){
 	interval = setInterval( update, time_seconds * 1000 );
+}
+
+function restart() {
+	set_game_field();
+	draw();
 }

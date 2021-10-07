@@ -17,7 +17,12 @@ button {
 	height: 40px;
 }
 
+.headline {
+	margin: 10px;
+}
+
 .instruction-box {
+	border-top: 2px solid black;
 	
 	padding-left: 5%;
 	padding-right: 5%;
