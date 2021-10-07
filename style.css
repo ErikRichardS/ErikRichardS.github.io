@@ -6,8 +6,36 @@ body{
 canvas {
 	background: #ddd;
 	border-color: coral;
+	width: 100%;
+	height: width;
 }
 
+
+button {
+	#border-style: solid;
+	width: 100px;
+	height: 40px;
+}
+
+.instruction-box {
+	
+	padding-left: 5%;
+	padding-right: 5%;
+}
+
+
+.instruction-text {
+	text-align: left;
+	padding: 10px;
+}
+
+.control {
+	float: left;
+	margin-left: 50px;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	width: 200px;
+}
 
 .center{
 	width: 50%;

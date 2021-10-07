@@ -1,7 +1,11 @@
 
 var map_field;
-var map_size = 100;
+const map_size = 100;
+const cell_size = 10;
 
+var interval;
+
+var locked = false;
 
 function initiate_game(){
 	map_field = [];
@@ -22,7 +26,54 @@ function initiate_game(){
 		}
 		string_map += "\n";
 	}
+
+	var canvas = document.getElementById("gameOfLife");
+
+	canvas.addEventListener("click", function(e) {
+		getCanvasPosition(canvas, e);
+	});
+
+
+	time_seconds = get_interval_time();
+	document.getElementById("interval-label").innerHTML = "Game speed: "+ time_seconds + " seconds";
+	start_interval(time_seconds);
+
+	var slide = document.getElementById("interval");
+	slide.onchange = function() {
+		
+		time_seconds = get_interval_time();
+		document.getElementById("interval-label").innerHTML = "Game speed: "+ time_seconds + " seconds";
+
+		if (interval) {
+			clearInterval(interval);
+			start_interval(time_seconds);
+		}
+	}
+
+
 }
+
+function getCanvasPosition(canvas, event) {
+	while(locked);
+	locked = true;
+
+	var rect = canvas.getBoundingClientRect();
+	var top = rect.top;
+	var left = rect.left;
+
+	var x = Math.floor( (event.clientX - rect.left) / rect.width * canvas.width / map_size * cell_size );
+	var y = Math.floor( (event.clientY - rect.top) / rect.height * canvas.height / map_size * cell_size );
+
+	map_field[x][y] = !map_field[x][y];
+	draw();
+
+	document.getElementById("info-coord").innerHTML = "x: "+x+" y: "+y;
+	//document.getElementById("info-corn").innerHTML = "top: "+top+" bot: "+left
+
+	//document.getElementById("info-misc").innerHTML = "width: "+canvas.width;
+	locked = false;
+}
+
 
 
 function draw() {
@@ -36,7 +87,7 @@ function draw() {
 
 			if (map_field[x][y]) {
 				ctx.beginPath();
-				ctx.rect(x*10 + 1, y*10 + 1, 8, 8);
+				ctx.rect(x*cell_size + 1, y*cell_size + 1, 8, 8);
 				ctx.fillStyle = "#111";
 				ctx.fill();
 				ctx.closePath();
@@ -47,6 +98,9 @@ function draw() {
 }
 
 function update() {
+	while(locked);
+	locked = true;
+
 	var changes = [];
 
 	for (let x = 0; x < map_size; ++x) { 
@@ -82,6 +136,7 @@ function update() {
 	}
 
 	draw();
+	locked = false;
 }
 
 
@@ -97,4 +152,24 @@ function check_alive(x, y) {
 	return false;
 }
 
-setInterval( update, 500 );
+function pause_start(button) {
+	if (interval) {
+		clearInterval(interval); 
+		interval = null;
+		button.innerHTML = "Play";
+	}
+	else {
+
+		start_interval( get_interval_time() );
+		button.innerHTML = "Pause";
+	}
+}
+
+function get_interval_time(){
+	var slider_value = document.getElementById("interval").value;
+	return Math.round( (1000 / slider_value) ) / 100;
+}
+
+function start_interval(time_seconds){
+	interval = setInterval( update, time_seconds * 1000 );
+}
