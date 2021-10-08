@@ -1,24 +1,56 @@
-body{
-	background-color: white;
+
+
+.site-wrapper {
+	margin: auto;
+	text-align: center;
+	
+}
+
+@media (min-width: 1024px) {
+	.site-wrapper {
+		width: 50%;
+	}
+}
+@media (max-width: 1024px) {
+	.site-wrapper {
+		width: 90%;
+	}
 }
 
 
-canvas {
-	background: #ddd;
-	border-color: coral;
+#page-select-box {
 	width: 100%;
-	height: width;
+	height: 100px;
 }
 
+.page-select{
+	padding-top: 30px;
+	padding-bottom: 30px;
+	width: 20%;
+	float: left;
 
-button {
-	#border-style: solid;
-	width: 100px;
-	height: 40px;
+	border-top: 2px solid black;
+	border-left: 2px solid black;
+	margin-right: -2px;
+}
+
+a .page-select {
+	
+	border-bottom: 2px solid black;
+	color: black;
+
+}
+a:hover .page-select {
+	color: #111;
+	background: #eee;
+}
+
+#main-wrapper{
+	width: 100%;
 }
 
 .headline {
-	margin: 10px;
+	margin: 20px;
 }
 
 .instruction-box {
@@ -34,32 +66,3 @@ button {
 	padding: 10px;
 }
 
-.control {
-	float: left;
-	margin-left: 50px;
-	margin-top: 30px;
-	margin-bottom: 30px;
-	width: 200px;
-}
-
-.control input {
-	width: 100%;
-}
-
-.center {
-	margin: auto;
-	margin-top: 10%;
-	text-align: center;
-	
-}
-
- @media (min-width: 1024px) {
- 	.center {
-		width: 50%;
-	}
-}
- @media (max-width: 1024px) {
- 	.center {
-		width: 90%;
-	}
-}

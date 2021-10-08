@@ -1,0 +1,24 @@
+canvas {
+	background: #ddd;
+	border-color: coral;
+	width: 100%;
+	height: width;
+}
+
+button {
+	#border-style: solid;
+	width: 100px;
+	height: 40px;
+}
+
+.control {
+	float: left;
+	margin-left: 50px;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	width: 200px;
+}
+
+.control input {
+	width: 100%;
+}

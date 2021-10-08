@@ -1,0 +1,88 @@
+ <!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="snake.css">
+	<script src="linked-list.js"></script>
+	<script src="snake.js"></script>
+</head>
+<body onload="initiate_game()">
+<div class="site-wrapper">
+	<div id="page-select-box">
+		<a href="index.html">
+			<div class="page-select">
+					Main
+			</div>
+		</a>
+		<a href="game-of-life.html">
+			<div class="page-select">
+				Game of Life
+			</div>
+		</a>
+			<div class="page-select">
+				Snake
+			</div>
+
+	</div>
+
+	<div id="main-box">
+		<div class="headline">
+			<h1>Erik Richard Svensson</h1>
+		
+		
+			<div id="info-coord">Info goes here</div>
+			<div id="info-corn">Info goes here</div>
+			<div id="info-misc">Info goes here</div>
+		</div>
+	
+
+		<div>
+			<div class="headline">
+				<h2>
+					Snake
+				</h2>
+				<div>
+					It's classic snake. 
+				</div>
+			</div>
+			
+			<div class="instruction-box">
+				<div class="instruction-text">
+					Snake is simple. Guide the snake towards the fruit. Each fruit eaten gives 1 point and makes the snake longer. If the snake runs into any wall or itself its Game Over. 
+				</div>
+				<div class="instruction-text">
+					Use slider to adjust update speed.
+				</div>
+				<div class="instruction-text">
+					Game can be paused and resumed with the button.
+				</div>
+				<div class="instruction-text">
+					Clicking on the field will turn cell from alive to dead, or dead to alive.
+				</div>
+			</div>
+			
+		</div>
+
+		
+		<div class="control-panel">
+			<div class="control">
+				<input type="range" id="interval" min="0" max="90" value="50" step="1">
+				<label for="interval" id="interval-label">Game Speed: </label>
+			</div>
+			
+			<div class="control">
+				<button onclick="pause_start(this)">Pause</button>
+			</div>
+			<div class="control">
+				<button onclick="restart()">Restart</button>
+			</div>
+			
+		</div>
+		
+		<canvas id="game-field" width="1000" height="1000"></canvas>
+	</div>
+</div>
+
+
+</body>
+</html>

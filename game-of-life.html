@@ -1,0 +1,83 @@
+ <!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="game-of-life.css">
+	<script src="game-of-life.js"></script> 
+</head>
+<body onload="initiate_game()">
+<div class="site-wrapper">
+	<div id="page-select-box">
+		<a href="index.html">
+			<div class="page-select">
+					Main
+			</div>
+		</a>
+			<div class="page-select">
+				Game of Life
+			</div>
+		<a href="snake.html">
+			<div class="page-select">
+				Snake
+			</div>
+		</a>
+	</div>
+	<div id="main-wrapper">
+		<div>
+			<h1 class="headline">Erik Richard Svensson</h1>
+		</div>
+		
+		<!--<div id="info-coord">Info goes here</div>
+		<div id="info-corn">Info goes here</div>
+		<div id="info-misc">Info goes here</div>-->
+		<div>
+			<div class="headline">
+				<h2>
+					Game of Life
+				</h2>
+				<div>
+					A pointless game with no defined end point. 
+				</div>
+			</div>
+			
+			<div class="instruction-box">
+				<div class="instruction-text">
+					Game of Life plays out on a 2D grid of cells. A cell can be alive or dead. If an alive cell has two or three neighbors that are also alive, it will remain alive. If a dead cell has three living neighbors, it comes alive. In all other cases a cell either becomes or remains dead. 
+				</div>
+				<div class="instruction-text">
+					Use slider to adjust update speed.
+				</div>
+				<div class="instruction-text">
+					Game can be paused and resumed with the button.
+				</div>
+				<div class="instruction-text">
+					Clicking on the field will turn cell from alive to dead, or dead to alive.
+				</div>
+			</div>
+			
+		</div>
+
+		
+		<div class="control-panel">
+			<div class="control">
+				<input type="range" id="interval-slider" min="0" max="90" value="50" step="1">
+				<label for="interval" id="interval-label">Game Speed: </label>
+			</div>
+			
+			<div class="control">
+				<button onclick="pause_start(this)">Pause</button>
+			</div>
+			<div class="control">
+				<button onclick="restart()">Restart</button>
+			</div>
+			
+		</div>
+		
+		<canvas id="game-field" width="1000" height="1000"></canvas>
+	</div>
+	
+</div>
+
+
+</body>
+</html>

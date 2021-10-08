@@ -1,28 +1,32 @@
-
 var map_field;
 const map_size = 100;
 const cell_size = 10;
 
+var canvas;
+var slider;
+
 var interval;
 
-var locked = false;
+
 
 function initiate_game(){
 	set_game_field();
 
-	var canvas = document.getElementById("gameOfLife");
+	canvas = document.getElementById("game-field");
 
 	canvas.addEventListener("click", function(e) {
 		getCanvasPosition(canvas, e);
 	});
+
+	slider = document.getElementById("interval-slider");
 
 
 	time_seconds = get_interval_time();
 	document.getElementById("interval-label").innerHTML = "Game speed: "+ time_seconds + " seconds";
 	start_interval(time_seconds);
 
-	var slide = document.getElementById("interval");
-	slide.onchange = function() {
+	
+	slider.onchange = function() {
 		
 		time_seconds = get_interval_time();
 		document.getElementById("interval-label").innerHTML = "Game speed: "+ time_seconds + " seconds";
@@ -71,7 +75,6 @@ function getCanvasPosition(canvas, event) {
 
 
 function draw() {
-	var canvas = document.getElementById("gameOfLife");
 	var ctx = canvas.getContext("2d");
 
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -156,7 +159,7 @@ function pause_start(button) {
 }
 
 function get_interval_time(){
-	var slider_value = document.getElementById("interval").value;
+	var slider_value = slider.value;
 	return Math.round( ( 100 - slider_value) ) / 100;
 }
 
