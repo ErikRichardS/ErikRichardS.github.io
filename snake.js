@@ -1,12 +1,14 @@
-const map_size = 100;
-const cell_size = 10;
+const map_size = 30;
+const cell_size = 30;
 
-var canvas;
-
-var interval;
+const starting_length = 5;
+var score = 0;
+var update_time = 500;
 
 var snake;
 var fruit_coordinates;
+
+var interval;
 
 const directions = {
 						"up": 0,
@@ -16,27 +18,31 @@ const directions = {
 					}
 
 
+function zero(){
+	return 0;
+}
+
 
 function initiate_game(){
 	canvas = document.getElementById("game-field");
 
-	snake = new Snake();
-
-	
-
-	
-	draw();
-	start_interval(1);
-
-	document.getElementById("info-misc").innerHTML = "Test";
-
+	restart();
 
 	document.addEventListener('keydown', function(event) {
-		if(event.keyCode == 37) {
-			alert('Left was pressed');
+
+		//document.getElementById("info-misc").innerHTML = event.keyCode;
+		if(event.keyCode == 87) {
+			change_direction("up");
 		}
-		else if(event.keyCode == 39) {
-			alert('Right was pressed');
+		else if(event.keyCode == 83) {
+			change_direction("down");
+		}
+		else if(event.keyCode == 65) {
+			change_direction("left");
+		}
+		else if(event.keyCode == 68) {
+			//document.getElementById("info-corn").innerHTML = event.keyCode;
+			change_direction("right");
 		}
 	});
 }
@@ -44,70 +50,114 @@ function initiate_game(){
 
 class Snake {
 	constructor() {
-		this.length = 5;
-		this.head = [10,10];
-		this.direction = directions["right"];
+		this.direction = directions["down"];
 
-		this.coordinates = new LinkedList();
+		this.body = new LinkedList();
 
 		
-		for (var i = 0; i < this.length; ++i) {
-			this.coordinates.add([10, 10-i]);
+		for (var i = 0; i < starting_length; ++i) {
+			var x = 10;
+			var y = 10-i;
+			this.body.push([x, y]);
+
+			map_field[x][y] = 1;
 		}
 		
 	}
 
 	change_direction(new_direction) {
 		// As long as the new direction isn't opposite 
-		// of the new one, adopt the new direction
-		if (! this.direction == (new_direction+2)%4 ) {
+		// of the new one, adopt the new direction		 
+		var is_opposite = ( this.direction == ( (new_direction+2) % 4 ) )
+
+		if ( !is_opposite ) {
 			this.direction = new_direction;
 		}
 	}
 
+	// Return true if the snake is still alive
+	// Return false in case of game over
 	update() {
-
-		var x = this.coordinates.tail.value[0];
-		var y = this.coordinates.tail.value[1];
-
-
+		var x = this.body.tail.value[0];
+		var y = this.body.tail.value[1];
 
 		if (this.direction == directions["up"]) {
-			this.coordinates.add([x, y-1]);
+			y = y-1;
 		}
 		else if (this.direction == directions["right"]) {
-			this.coordinates.add([x+1, y]);
+			x = x+1;
 		}
 		else if (this.direction == directions["down"]) {
-			this.coordinates.add([x, y+1]);
+			y = y+1;
 		}
 		else {
-			this.coordinates.add([x-1, y]);
+			x = x-1;
 		}
 
-		document.getElementById("info-coord").innerHTML = "Head-X: ";
+		// Check if snake ran into a wall or itself
+		if (x < 0 || x >= map_size || x < 0 || x >= map_size || map_field[x][y] == 1) {
+			return false;
+		}
 
-		this.coordinates.remove_first();
+		// Head moves forward
+		this.body.add([x, y]);
+		map_field[x][y] = 1;
+
+		// If no fruit was eaten, tail moves forward
+		if  ( x == fruit_coordinates[0] && y == fruit_coordinates[1] ) {
+			new_fruit();
+		}
+		else {
+			var tail = this.body.remove_first().value;
+			map_field[tail[0]][tail[1]] = 0;
+		}
+		
+
+		return true;
 	}
 
 	draw(ctx) {
-		var current_node = this.coordinates.head;
+		var current_node = this.body.head;
 
-		// Draw rest of body
+		// Draw body
 		while (current_node.next != null) {
-			draw_square(ctx, current_node.value[0], current_node.value[1], "#171", 1);
+			draw_square(ctx, current_node.value[0], current_node.value[1], cell_size, "#171", 1);
 			current_node = current_node.next;
 		}
 
-		draw_square(ctx, current_node.value[0], current_node.value[1], "#191");
+		// Draw head
+		draw_square(ctx, current_node.value[0], current_node.value[1], cell_size, "#191");
 	}
 }
 
+function change_direction(new_direction) {
+	snake.change_direction(directions[new_direction]);
+}
+
+function new_fruit() {
+	score++;
+	document.getElementById("score-board").innerHTML = "Score: "+score;
+
+	var x = random_int(map_size);
+	var y = random_int(map_size);
+
+	while ( map_field[x][y] != 0 ) {
+		x = random_int(map_size);
+		y = random_int(map_size);
+	}
+
+	fruit_coordinates = [x, y];
+
+	if (update_time > 100) {
+		update_time -= 2;
+
+		clearInterval(interval); 
+		interval = setInterval( update, update_time );
+	}
+}
 
 function update() {
-	
 	snake.update();
-
 	draw();
 }
 
@@ -117,23 +167,10 @@ function draw() {
 
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-	
 	snake.draw(ctx);
 
-
+	draw_square(ctx, fruit_coordinates[0], fruit_coordinates[1], cell_size, "#722");
 }
-
-function draw_square(ctx, x, y, color="#111", border=0) {
-	ctx.beginPath();
-	ctx.rect(x*cell_size + border, y*cell_size + border, cell_size - 2*border, cell_size - 2*border);
-	ctx.fillStyle = color;
-	ctx.fill();
-	ctx.closePath();
-}
-
-
-
-
 
 function pause_start(button) {
 	if (interval) {
@@ -142,22 +179,21 @@ function pause_start(button) {
 		button.innerHTML = "Play";
 	}
 	else {
-
-		start_interval( get_interval_time() );
+		interval = setInterval( update, update_time );
 		button.innerHTML = "Pause";
 	}
 }
 
-function get_interval_time(){
-	var slider_value = document.getElementById("interval").value;
-	return Math.round( ( 100 - slider_value) ) / 100;
-}
-
-function start_interval(time_seconds){
-	interval = setInterval( update, time_seconds * 1000 );
-}
-
 function restart() {
-	set_game_field();
+	set_game_field( zero );
+
+	snake = new Snake();
+	
+	fruit_coordinates = [random_int(map_size), random_int(map_size)];
 	draw();
+
+	clearInterval(interval); 
+	interval = null;
+
+	document.getElementById("button-pause").innerHTML = "Play";
 }

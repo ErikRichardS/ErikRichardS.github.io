@@ -1,16 +1,18 @@
-var map_field;
 const map_size = 100;
 const cell_size = 10;
 
-var canvas;
 var slider;
 
-var interval;
 
-
+function initial_field_value() {
+	if (0.5 < Math.random()) {
+		return true;
+	}
+	return false;
+}
 
 function initiate_game(){
-	set_game_field();
+	set_game_field( initial_field_value );
 
 	canvas = document.getElementById("game-field");
 
@@ -34,23 +36,6 @@ function initiate_game(){
 		if (interval) {
 			clearInterval(interval);
 			start_interval(time_seconds);
-		}
-	}
-}
-
-function set_game_field() {
-	map_field = [];
-	
-	for (let x = 0; x < map_size; ++x) { 
-		map_field.push([])
-
-		for (let y = 0; y < map_size; ++y) {
-			if (0.5 < Math.random()) {
-				map_field[x].push( true );
-			}
-			else{
-				map_field[x].push( false );
-			}
 		}
 	}
 }
@@ -83,11 +68,7 @@ function draw() {
 		for (let y = 0; y < map_size; ++y) {
 
 			if (map_field[x][y]) {
-				ctx.beginPath();
-				ctx.rect(x*cell_size + 1, y*cell_size + 1, 8, 8);
-				ctx.fillStyle = "#111";
-				ctx.fill();
-				ctx.closePath();
+				draw_square(ctx, x, y, cell_size, color="#111", border=1);
 			}
 			
 		}
@@ -152,7 +133,6 @@ function pause_start(button) {
 		button.innerHTML = "Play";
 	}
 	else {
-
 		start_interval( get_interval_time() );
 		button.innerHTML = "Pause";
 	}

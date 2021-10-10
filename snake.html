@@ -3,7 +3,9 @@
 <head>
 	<link rel="stylesheet" href="style.css">
 	<link rel="stylesheet" href="snake.css">
-	<script src="linked-list.js"></script>
+	<script src="game-field.js"></script>
+	<script src="utility/linked-list.js"></script>
+	<script src="utility/random-int.js"></script>
 	<script src="snake.js"></script>
 </head>
 <body onload="initiate_game()">
@@ -30,9 +32,9 @@
 			<h1>Erik Richard Svensson</h1>
 		
 		
-			<div id="info-coord">Info goes here</div>
+			<!--<div id="info-coord">Info goes here</div>
 			<div id="info-corn">Info goes here</div>
-			<div id="info-misc">Info goes here</div>
+			<div id="info-misc">Info goes here</div>-->
 		</div>
 	
 
@@ -51,35 +53,55 @@
 					Snake is simple. Guide the snake towards the fruit. Each fruit eaten gives 1 point and makes the snake longer. If the snake runs into any wall or itself its Game Over. 
 				</div>
 				<div class="instruction-text">
-					Use slider to adjust update speed.
+					You can use the large arrow buttons to change direction.
 				</div>
 				<div class="instruction-text">
-					Game can be paused and resumed with the button.
-				</div>
-				<div class="instruction-text">
-					Clicking on the field will turn cell from alive to dead, or dead to alive.
+					Additionally, you can also use the W A S D keys to change direction. 
 				</div>
 			</div>
 			
 		</div>
 
 		
-		<div class="control-panel">
+		<div id="control-panel">	
 			<div class="control">
-				<input type="range" id="interval" min="0" max="90" value="50" step="1">
-				<label for="interval" id="interval-label">Game Speed: </label>
-			</div>
-			
-			<div class="control">
-				<button onclick="pause_start(this)">Pause</button>
+				<button id="button-pause" onclick="pause_start(this)">Play</button>
 			</div>
 			<div class="control">
-				<button onclick="restart()">Restart</button>
+				<button id="button-restart" onclick="restart()">Restart</button>
 			</div>
 			
 		</div>
 		
-		<canvas id="game-field" width="1000" height="1000"></canvas>
+		<div id="game-wrapper">
+			<!--
+			<button class="button-snake" id="button-up" onclick="change_direction('up')">V</button>
+			<button class="button-snake" id="button-down" onclick="change_direction('down')">V</button>
+			<button class="button-snake" id="button-left" onclick="change_direction('left')">V</button>
+			<button class="button-snake" id="button-right" onclick="change_direction('right')">V</button>
+
+			
+			-->
+			<div id="score-board">
+				Score: 0
+			</div>
+
+			<div class="button-snake" id="button-up" onclick="change_direction('up')">
+				<img src="arrow.svg">
+			</div>
+			<div class="button-snake" id="button-down" onclick="change_direction('down')">
+				<img src="arrow.svg">
+			</div>
+			<div class="button-snake" id="button-left" onclick="change_direction('left')">
+				<img src="arrow.svg">
+			</div>
+			<div class="button-snake" id="button-right" onclick="change_direction('right')">
+				<img src="arrow.svg">
+			</div>
+
+			<canvas id="game-field" width="900" height="900"></canvas>
+		</div>
+		
 	</div>
 </div>
 

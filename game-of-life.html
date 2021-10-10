@@ -3,6 +3,7 @@
 <head>
 	<link rel="stylesheet" href="style.css">
 	<link rel="stylesheet" href="game-of-life.css">
+	<script src="game-field.js"></script>
 	<script src="game-of-life.js"></script> 
 </head>
 <body onload="initiate_game()">
@@ -65,10 +66,10 @@
 			</div>
 			
 			<div class="control">
-				<button onclick="pause_start(this)">Pause</button>
+				<button id="button-pause" onclick="pause_start(this)">Pause</button>
 			</div>
 			<div class="control">
-				<button onclick="restart()">Restart</button>
+				<button id="button-restart" onclick="restart()">Restart</button>
 			</div>
 			
 		</div>
