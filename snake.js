@@ -33,16 +33,18 @@ function initiate_game(){
 	document.addEventListener('keydown', function(event) {
 
 		//document.getElementById("info-misc").innerHTML = event.keyCode;
-		if(event.keyCode == 87) {
+		if(event.keyCode == 87 || event.keyCode == 38) {
+			event.preventDefault();
 			change_direction("up");
 		}
-		else if(event.keyCode == 83) {
+		else if(event.keyCode == 83 || event.keyCode == 40) {
+			event.preventDefault();
 			change_direction("down");
 		}
-		else if(event.keyCode == 65) {
+		else if(event.keyCode == 65 || event.keyCode == 37) {
 			change_direction("left");
 		}
-		else if(event.keyCode == 68) {
+		else if(event.keyCode == 68 || event.keyCode == 39) {
 			//document.getElementById("info-corn").innerHTML = event.keyCode;
 			change_direction("right");
 		}
