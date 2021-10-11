@@ -148,6 +148,6 @@ function start_interval(time_seconds){
 }
 
 function restart() {
-	set_game_field();
+	set_game_field( initial_field_value );
 	draw();
 }
