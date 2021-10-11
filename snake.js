@@ -55,6 +55,7 @@ function initiate_game(){
 class Snake {
 	constructor() {
 		this.direction = directions["down"];
+		this.new_direction = -1;
 
 		this.body = new LinkedList();
 
@@ -75,13 +76,18 @@ class Snake {
 		var is_opposite = ( this.direction == ( (new_direction+2) % 4 ) )
 
 		if ( !is_opposite ) {
-			this.direction = new_direction;
+			this.new_direction = new_direction;
 		}
 	}
 
 	// Return true if the snake is still alive
 	// Return false in case of game over
 	update() {
+		if (this.new_direction > -1) {
+			this.direction = this.new_direction;
+			this.new_direction = -1;
+		}
+
 		var x = this.body.tail.value[0];
 		var y = this.body.tail.value[1];
 
@@ -204,7 +210,7 @@ function restart() {
 	snake = new Snake();
 	snake_alive = true;
 
-	update_time = 500;
+	update_time = 1000;
 	score = 0;
 	
 	fruit_coordinates = [random_int(map_size), random_int(map_size)];
