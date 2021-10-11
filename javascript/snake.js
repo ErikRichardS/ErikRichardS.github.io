@@ -210,7 +210,7 @@ function restart() {
 	snake = new Snake();
 	snake_alive = true;
 
-	update_time = 1000;
+	update_time = 500;
 	score = 0;
 	
 	fruit_coordinates = [random_int(map_size), random_int(map_size)];
