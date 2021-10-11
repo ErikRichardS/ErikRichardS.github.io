@@ -100,3 +100,13 @@ button {
 	margin: 10%;
 
 }
+
+#game-over-screen {
+	position: absolute;
+	width: 30%;
+	height: 20;
+	margin-left: 35%;
+	margin-right: 35%;
+	margin-top: 40%;
+	display: none;
+}

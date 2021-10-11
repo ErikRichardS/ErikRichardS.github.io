@@ -2,13 +2,15 @@ const map_size = 30;
 const cell_size = 30;
 
 const starting_length = 5;
-var score = 0;
-var update_time = 500;
+var score;
+var update_time;
 
 var snake;
+var snake_alive;
 var fruit_coordinates;
 
 var interval;
+
 
 const directions = {
 						"up": 0,
@@ -93,9 +95,10 @@ class Snake {
 		else {
 			x = x-1;
 		}
+		document.getElementById("info-misc").innerHTML = "X: "+x+" | Y: "+y;
 
 		// Check if snake ran into a wall or itself
-		if (x < 0 || x >= map_size || x < 0 || x >= map_size || map_field[x][y] == 1) {
+		if (x < 0 || x >= map_size || y < 0 || y >= map_size || map_field[x][y] == 1) {
 			return false;
 		}
 
@@ -157,8 +160,17 @@ function new_fruit() {
 }
 
 function update() {
-	snake.update();
-	draw();
+	if (snake_alive) {
+		snake_alive = snake.update();
+		draw();
+
+		if (!snake_alive){
+			document.getElementById("game-over-score").innerHTML = "Final Score: " + score;
+			document.getElementById("game-over-screen").style.display = "block";
+		}
+	}
+
+
 }
 
 
@@ -188,6 +200,10 @@ function restart() {
 	set_game_field( zero );
 
 	snake = new Snake();
+	snake_alive = true;
+
+	update_time = 500;
+	score = 0;
 	
 	fruit_coordinates = [random_int(map_size), random_int(map_size)];
 	draw();
@@ -196,4 +212,6 @@ function restart() {
 	interval = null;
 
 	document.getElementById("button-pause").innerHTML = "Play";
+	document.getElementById("score-board").innerHTML = "Score: "+score;
+	document.getElementById("game-over-screen").style.display = "none";
 }
