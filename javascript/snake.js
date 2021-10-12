@@ -1,5 +1,5 @@
-const map_size = 30;
-const cell_size = 30;
+const map_size = 20;
+const cell_size = 50;
 
 const starting_length = 5;
 var score;
@@ -27,6 +27,9 @@ function zero(){
 
 function initiate_game(){
 	canvas = document.getElementById("game-field");
+
+	canvas.width = map_size * cell_size;
+	canvas.height = canvas.width;
 
 	restart();
 
@@ -160,7 +163,7 @@ function new_fruit() {
 	fruit_coordinates = [x, y];
 
 	if (update_time > 100) {
-		update_time -= 2;
+		update_time -= 10;
 
 		clearInterval(interval); 
 		interval = setInterval( update, update_time );
